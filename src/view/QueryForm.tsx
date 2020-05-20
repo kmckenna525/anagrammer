@@ -1,5 +1,6 @@
 import React from 'react';
 import {QueryDriver} from '../domain/QueryDriver';
+import { Button, ButtonGroup } from 'react-bootstrap';
 
 export interface IProps {
   driver:QueryDriver;
@@ -49,12 +50,14 @@ export class QueryForm extends React.Component<IProps, IState> {
           <label>
             Query:
             <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input type="button" value="Prefix" onClick={this.handlePrefix}/>
-          <input type="button" value="Suffix" onClick={this.handleSuffix}/>
-          <input type="button" value="Pattern" onClick={this.handlePattern}/>
-          <input type="button" value="Anagram" onClick={this.handleAnagram}/>
-          <input type="button" value="NAnagram" onClick={this.handleNAnagram}/>
+          </label><br/>
+          <ButtonGroup>
+            <Button variant="secondary" value="Prefix" onClick={this.handlePrefix}>Prefix</Button>
+            <Button variant="secondary" value="Suffix" onClick={this.handleSuffix}>Suffix</Button>
+            <Button variant="secondary" value="Pattern" onClick={this.handlePattern}>Pattern</Button>
+            <Button variant="secondary" value="Anagram" onClick={this.handleAnagram}>Anagram</Button>
+            <Button variant="secondary" value="NAnagram" onClick={this.handleNAnagram}>N-Anagram</Button>
+          </ButtonGroup>
         </view>
       );
     }

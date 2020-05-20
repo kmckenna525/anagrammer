@@ -1,4 +1,5 @@
 import React from 'react';
+import { ListGroup } from 'react-bootstrap';
 
 interface IProps {
     result:string;
@@ -8,7 +9,7 @@ interface IProps {
   export class SearchResultCell extends React.Component<IProps> {
       render() {
         return (
-        <span>{this.props.result.length}: {this.props.result}</span>
+        <ListGroup.Item>{this.props.result.length}: {this.props.result}</ListGroup.Item>
         );
       }
   }

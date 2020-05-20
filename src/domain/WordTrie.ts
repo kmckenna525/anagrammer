@@ -1,5 +1,6 @@
 import { RawExpression, TokenType } from "./RawExpression";
 
+const MAX_WORDS = 1000;
 const END_WORD = 'END';
 
 export class WordNode {
@@ -57,8 +58,9 @@ export class WordNode {
     }
 
     private getWordsInternal(prefix: string, words: string[]) {
+        if(words.length >= MAX_WORDS) return;
+        
         if(this.value === END_WORD) {
-            console.log(prefix);
             words.push(prefix);
         }
 
@@ -183,20 +185,21 @@ export class WordTrie {
         const pool = new AnagramPool(query);
         const words:string[] = [];
         this.getAnagramsInternal(pool, new SearchNode(this.head), words);
-        words.sort((a,b)=>b.length - a.length);
         return words;
     }
     
     private getAnagramsInternal(pool:AnagramPool, searchNode:SearchNode, words:string[]) {
+        if(words.length >= MAX_WORDS) return;
+
         const remaining = pool.getIterableRemaining();
-        console.log(searchNode.path);
 
         if(pool.count === 0) {
             return;
         }
 
+        if(words.length >= MAX_WORDS) return;
+
         for (const letter of remaining) {
-            console.log(letter);
             // is this letter even a valid path?
             if(!searchNode.node.hasChild(letter)) {
                 continue;
@@ -222,13 +225,13 @@ export class WordTrie {
         const pool = new NAnagramPool(query);
         const words:string[] = [];
         this.getNAnagramsInternal(pool, new SearchNode(this.head), 0, words);
-        words.sort((a,b)=>b.length - a.length);
         return words;
     }
-    
+
     private getNAnagramsInternal(pool:NAnagramPool, searchNode:SearchNode, depth:number, words:string[]) {
+        if(words.length >= MAX_WORDS) return;
+
         const remaining = pool.getIterableRemaining();
-        console.log(searchNode.path);
 
         if(pool.count === 0) {
             return;
@@ -346,6 +349,7 @@ class AnagramPool {
     }
 }
 
+// todo: this can probably replace the regular anagram pool? idk... not different really other than query processing
 class NAnagramPool {
     map: Map<string, number>;
     count: number;

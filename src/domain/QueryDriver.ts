@@ -1,5 +1,5 @@
 import words from '../data/words_dictionary.json'
-import { WordTrie } from './wordTrie'
+import { WordTrie } from './WordTrie'
 import {observable} from 'mobx'
 
 export class QueryDriver {
@@ -18,6 +18,8 @@ export class QueryDriver {
         this.reverseDictionary = new WordTrie();
 
         for (const word in words) {
+            if(word.length < 2) continue;
+
             this.dictionary.addWord(word);
             this.reverseDictionary.addWord(this.reverse(word));
         }
